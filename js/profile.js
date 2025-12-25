@@ -23,6 +23,12 @@ async function loadProfile() {
   if (sessionErr) console.error(sessionErr);
   currentSession = sessionData?.session ?? null;
 
+  const isAdmin =
+    !!currentSession &&
+    (
+      currentSession.user.email === "tommartin2085@gmail.com"
+    );
+
   // 2) fetch profile
   const { data: profile, error: profileError } = await sb
     .from("profiles")
@@ -39,7 +45,8 @@ async function loadProfile() {
   
   // 3) ownership
   const isOwner =
-    !!currentSession && currentSession.user.id === profile.id;
+    !!currentSession &&
+    (currentSession.user.id === profile.id || isAdmin);
 
   document.getElementById("user-title").textContent = username + "'s page"
 
@@ -121,7 +128,7 @@ if (form && !form.dataset.wired) {
     }
 
     const { error } = await sb.from("albums").insert({
-      user_id: currentSession.user.id,
+      user_id: currentProfile.id,
       title,
       cover,
       spotify: spotify || null,
@@ -351,7 +358,6 @@ document.getElementById("save-edit").addEventListener("click", async (e) => {
   document.getElementById("edit-panel").style.display = "none";
   document.getElementById("add-album-form").style.display = "none";
 
-  // Refresh grid
   grid.innerHTML = "";
-  loadAlbums();
+  loadProfile();
 });
