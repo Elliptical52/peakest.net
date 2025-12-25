@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PEAKEST.NET</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-profile">
+  <form id="add-album-form" style="display:none">
+    <h3>Add an album:</h3>
+      <div id="manual-add">
+        <input id="album-title" placeholder="Album title">
+        <input id="album-cover" placeholder="Cover image URL">
+        <input id="album-spotify" placeholder="Spotify link (optional)">
+        <input id="album-ytmusic" placeholder="YouTube Music link (optional)">
+        <button type="submit">Add Album</button>
+      </div>
+      <br><br>
+      <div id="search-add">
+        <input
+          id="album-search"
+          placeholder="Search albums..."
+          autocomplete="off"
+        />
+      <div id="search-results"></div>
+
+      </div>
+
+  </form>
+  <a href="index.html" class="site-title">
+    <h1>PEAKEST.NET</h1>
+  </a>
+  <main id="grid"></main>
+
+  <!-- Supabase library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Your client setup -->
+  <script src="js/supabase.js"></script>
+
+  <!-- Page logic -->
+  <script src="js/profile.js"></script>
+
+</body>
+</html>

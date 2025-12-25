@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PEAKEST.NET</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-centered">
+  <a href="index.html" class="site-title">
+    <h1>PEAKEST.NET</h1>
+  </a>
+  <h1>welcome to peakest.net!</h1>
+
+  <div id="guest-only">
+    <h2 id="auth-link" style="display:block"><a href="login.html">sign up or log in</a></h2>
+  </div>
+  <div id="signed-in-only">
+    <h2><a href="#" id="logout-link" style="display:block">log out</a></h2>
+    <h2><a id="profile-link" style="display:block">go to my account</a></h2>
+  </div>
+
+  <br><br>
+  <h2>find an account:</h2>
+  <form onsubmit="goToAccount(event)">
+    <input type="text" id="searched-user"><br>
+    <button type="button" onclick="goToAccount()">find user</button>
+  </form>
+  
+  <h2>check out our users:</h2>
+  <ul id="user-list">
+  </ul>
+
+  <!-- Supabase library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- client -->
+  <script src="js/supabase.js"></script>
+
+  <!-- Homepage logic -->
+  <script src="js/homepage.js"></script>
+</body>
+</html>

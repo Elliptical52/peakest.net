@@ -1,0 +1,252 @@
+/* =====================
+   Global / Base Styles
+   ===================== */
+
+@font-face {
+  font-family: 'Jost';
+  src: url('jost.ttf');
+}
+
+html, body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+}
+
+a {
+  color: rgb(164, 246, 255);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  color: rgb(60, 236, 255);
+}
+
+/* =====================
+   Site Title (top-left)
+   ===================== */
+
+.site-title {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  color: white;
+  z-index: 1000;
+}
+
+.site-title h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.site-title:hover {
+  opacity: 0.8;
+}
+
+/* =====================
+   Page Layouts
+   ===================== */
+
+/* Default centered page (home, login) */
+.page-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+}
+
+/* Profile page layout */
+.page-profile {
+  display: block;
+  padding-top: 60px;
+}
+
+/* =====================
+   Album Grid
+   ===================== */
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  padding: 8px;
+  width: 98%;
+
+}
+
+/* Album tile */
+.album {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+.album-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  padding-bottom: 0%;
+  background-color: #292929;
+}
+
+.album:hover .album-cover {
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.album:hover .overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Overlay icons */
+.overlay img {
+  width: 42px;
+  height: 42px;
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.overlay img:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+/* =====================
+   Forms
+   ===================== */
+
+form {
+  margin-bottom: 30px;
+}
+
+input, button {
+  font-family: inherit;
+  padding: 8px 12px;
+  margin: 6px 0;
+  background: #000;
+  color: white;
+  border: 1px solid #555;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: rgb(164, 246, 255);
+}
+
+.delete-btn {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 14px;
+  padding: 4px 6px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.delete-btn:hover {
+  opacity: 1;
+  color: #ff6b6b;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-result {
+  border: 1px solid white;
+  max-width: 20vw;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.search-result:hover {
+  background: rgba(255, 255, 255, 0.149);
+}
+
+.search-result:active {
+  background: rgba(0, 221, 255, 0.586);
+}
+
+
+
+@media (max-width: 1000px) {
+  body {
+    height: 60vh;
+    margin: 2vw 2vh;
+  }
+  h1 {font-size: 60px}
+  h2 {font-size: 50px}
+  input, button {
+    padding: 10px;
+    font-size: 50px
+  }
+  .site-title h1 {
+    font-size: 30px;
+    font-kerning: 50px;
+    padding: 20px;
+    font-weight: 800;
+  }
+
+  ul {
+    font-size: 50px;
+  }
+
+  h3 {
+    font-size: 50px;
+  }
+
+  #manual-add input, button {
+      font-size: 40px;
+      font-weight: normal;
+  }
+
+  .search-result {
+    padding: 20px;
+    font-size: 30px;
+    max-width: 80vw;
+  }
+
+  .album {
+    width: 95%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+  }
+  .overlay img {
+  width: 80px;
+  height: 80px;
+
+  }
+  .delete-btn {
+    padding: 20px 10px;
+    font-size: 30px;
+  }
+
+  #grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px
+  }
+}
