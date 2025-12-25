@@ -200,6 +200,7 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  font-size: 20px;
 }
 
 .search-result {
@@ -302,4 +303,5 @@ ul {
   width: 90vw;
   font-size: xxx-large;
 }
+
 }
