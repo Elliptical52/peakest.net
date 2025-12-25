@@ -170,6 +170,32 @@ button:hover {
   color: #ff6b6b;
 }
 
+.edit-btn {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 14px;
+  padding: 4px 6px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.edit-btn:hover {
+  opacity: 1;
+  color: #00bbff;
+}
+
+#edit-panel {
+  background-color: #303030;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding: 10px;
+  border-radius: 50px;
+  border: 10px solid #555;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -241,14 +267,22 @@ ul {
   height: 80px;
 
   }
-  .delete-btn {
+  .delete-btn, .edit-btn {
     padding: 20px 10px;
     font-size: 30px;
+  }
+
+  #edit-panel {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  #edit-panel input {
+    font-size: 30px;
+    padding: 30px;
   }
 
   #grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 2px
   }
-
 }

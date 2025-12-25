@@ -22,14 +22,22 @@
           placeholder="Search albums..."
           autocomplete="off"
         />
-      <div id="search-results"></div>
-
+        <div id="search-results"></div>
       </div>
-
+      <div id="edit-panel" style="display: none;">
+        <h3>Edit Album:</h3>
+        <input id="edit-album-title" placeholder="Album title">
+        <input id="edit-album-cover" placeholder="Cover image URL">
+        <input id="edit-album-spotify" placeholder="Spotify link (optional)">
+        <input id="edit-album-ytmusic" placeholder="YouTube Music link (optional)"><br>
+        <button id="save-edit">Save</button>
+        <button id="cancel-edit">Cancel</button>
+      </div>
   </form>
   <a href="index.html" class="site-title">
     <h1>PEAKEST.NET</h1>
   </a>
+  <h1 id="user-title"></h1>
   <main id="grid"></main>
 
   <!-- Supabase library -->
@@ -43,4 +51,3 @@
 
 </body>
 </html>
-

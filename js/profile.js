@@ -4,6 +4,7 @@ const username = new URLSearchParams(location.search).get("u");
 const grid = document.getElementById("grid");
 const form = document.getElementById("add-album-form");
 
+let editingAlbum = null;
 let currentProfile = null;
 let currentSession = null;
 
@@ -35,10 +36,12 @@ async function loadProfile() {
   }
 
   currentProfile = profile;
-
+  
   // 3) ownership
   const isOwner =
     !!currentSession && currentSession.user.id === profile.id;
+
+  document.getElementById("user-title").textContent = username + "'s page"
 
   // 4) show / hide add form
   if (form) {
@@ -72,22 +75,24 @@ function renderAlbums(albums, isOwner) {
     div.className = "album";
     div.title = album.title;
 
-    div.innerHTML = `
-      <img class="album-cover" src="${album.cover}" alt="${album.title}">
-      <div class="overlay">
-        ${album.spotify ? `
-          <a href="${album.spotify}" target="_blank" rel="noopener">
-            <img src="logos/spotify.svg" alt="">
-          </a>` : ""}
-        ${album.ytmusic ? `
-          <a href="${album.ytmusic}" target="_blank" rel="noopener">
-            <img src="logos/ytmusic.svg" alt="">
-          </a>` : ""}
-        ${isOwner ? `
-          <button class="delete-btn" data-id="${album.id}">✕</button>
-        ` : ""}
-      </div>
-    `;
+div.innerHTML = `
+  <img class="album-cover" src="${album.cover}" alt="${album.title}">
+  <div class="overlay">
+    ${album.spotify ? `
+      <a href="${album.spotify}" target="_blank" rel="noopener">
+        <img src="logos/spotify.svg" alt="">
+      </a>` : ""}
+    ${album.ytmusic ? `
+      <a href="${album.ytmusic}" target="_blank" rel="noopener">
+        <img src="logos/ytmusic.svg" alt="">
+      </a>` : ""}
+    ${isOwner ? `
+      <button class="edit-btn" data-id="${album.id}">✎</button>
+      <button class="delete-btn" data-id="${album.id}">✕</button>
+    ` : ""}
+  </div>
+`;
+
 
     grid.appendChild(div);
   }
@@ -282,3 +287,71 @@ document
     const album = JSON.parse(item.dataset.album);
     selectAlbum(album);
   });
+grid.addEventListener("click", async (e) => {
+  const editBtn = e.target.closest(".edit-btn");
+  if (!editBtn) return;
+
+  const albumId = editBtn.dataset.id;
+
+  const { data: album, error } = await sb
+    .from("albums")
+    .select("*")
+    .eq("id", albumId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  editingAlbum = album;
+
+  // Show edit panel
+  document.getElementById("add-album-form").style.display = "block";
+  document.getElementById("edit-panel").style.display = "block";
+
+  // Load current data
+  document.getElementById("edit-album-title").value = album.title || "";
+  document.getElementById("edit-album-cover").value = album.cover || "";
+  document.getElementById("edit-album-spotify").value = album.spotify || "";
+  document.getElementById("edit-album-ytmusic").value = album.ytmusic || "";
+});
+
+document.getElementById("cancel-edit").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  editingAlbum = null;
+  document.getElementById("edit-panel").style.display = "none";
+  document.getElementById("add-album-form").style.display = "none";
+});
+
+document.getElementById("save-edit").addEventListener("click", async (e) => {
+  e.preventDefault();
+  if (!editingAlbum) return;
+
+  const updated = {
+    title: document.getElementById("edit-album-title").value,
+    cover: document.getElementById("edit-album-cover").value,
+    spotify: document.getElementById("edit-album-spotify").value || null,
+    ytmusic: document.getElementById("edit-album-ytmusic").value || null,
+  };
+
+  const { error } = await sb
+    .from("albums")
+    .update(updated)
+    .eq("id", editingAlbum.id);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  // Close panel
+  editingAlbum = null;
+  document.getElementById("edit-panel").style.display = "none";
+  document.getElementById("add-album-form").style.display = "none";
+
+  // Refresh grid
+  grid.innerHTML = "";
+  loadAlbums();
+});
