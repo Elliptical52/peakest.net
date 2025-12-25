@@ -12,6 +12,7 @@ html, body {
   background: #000;
   color: #fff;
   font-family: 'Jost', sans-serif;
+  text-align: center;
 }
 
 a {
@@ -249,4 +250,5 @@ ul {
     grid-template-columns: repeat(4, 1fr);
     gap: 2px
   }
+
 }
