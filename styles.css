@@ -218,6 +218,16 @@ ul {
   background: rgba(0, 221, 255, 0.586);
 }
 
+.question {
+  margin-bottom: 15px;
+}
+
+.answer {
+  margin-top: 0px;
+  font-weight: 430;
+  width: 30vw;
+  font-size: large;
+}
 
 
 @media (max-width: 1000px) {
@@ -285,4 +295,11 @@ ul {
     grid-template-columns: repeat(4, 1fr);
     gap: 2px
   }
+
+  .answer {
+  margin-top: 0px;
+  font-weight: 430;
+  width: 90vw;
+  font-size: xxx-large;
+}
 }
