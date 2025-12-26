@@ -74,7 +74,7 @@ async function loadProfile() {
   // 3) ownership
   const isOwner =
     !!currentSession &&
-    (currentSession.user.id === profile.id || isAdmin);
+    (currentSession.user.id === profile.id);
 
   document.getElementById("user-title").textContent = username + "'s albums"
   document.getElementById("badge-title").textContent = username + "'s badges"
@@ -390,3 +390,4 @@ document.getElementById("save-edit").addEventListener("click", async (e) => {
   grid.innerHTML = "";
   loadProfile();
 });
+
