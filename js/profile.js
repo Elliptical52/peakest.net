@@ -79,6 +79,8 @@ async function loadProfile() {
   document.getElementById("user-title").textContent = username + "'s albums"
   document.getElementById("badge-title").textContent = username + "'s badges"
 
+
+
   // 4) show / hide add form
   if (form) {
     form.style.display = isOwner ? "block" : "none";
@@ -109,7 +111,7 @@ function renderAlbums(albums, isOwner) {
   for (const album of albums) {
     const div = document.createElement("div");
     div.className = "album";
-    div.title = album.title;
+    div.title = album.artist + " - " + album.title;
 
 div.innerHTML = `
   <img class="album-cover" src="${album.cover}" alt="${album.title}">
@@ -390,4 +392,3 @@ document.getElementById("save-edit").addEventListener("click", async (e) => {
   grid.innerHTML = "";
   loadProfile();
 });
-

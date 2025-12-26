@@ -103,3 +103,92 @@ async function loadUserList() {
 }
 
 loadUserList();
+
+async function renderPopularAlbum() {
+  // 1) get most-added album
+  const { data, error } = await sb
+    .from("album_counts")
+    .select("artist, title, entries")
+    .order("entries", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error || !data) {
+    console.error(error);
+    return;
+  }
+
+  const albumTitle = data.title;
+  const albumArtist = data.artist;
+  const entryCount = data.entries;
+
+  // 2) get all entries for that album
+  const { data: rows, error: rowsError } = await sb
+    .from("albums")
+    .select("title, cover, spotify, ytmusic")
+    .eq("title", albumTitle);
+
+  if (rowsError || !rows?.length) {
+    console.error(rowsError);
+    return;
+  }
+
+  let cover, spotify, ytmusic;
+
+  for (const r of rows) {
+    cover ??= r.cover;
+    spotify ??= r.spotify;
+    ytmusic ??= r.ytmusic;
+    if (cover && spotify && ytmusic) break;
+  }
+
+  console.log({
+    albumTitle,
+    entryCount,
+    cover,
+    spotify,
+    ytmusic
+  });
+
+document.getElementById("most-popular-album-cover").src = cover;
+document.getElementById("most-popular-album-name").textContent = albumTitle
+document.getElementById("most-popular-album-artist").textContent = albumArtist
+document.getElementById("most-popular-album-entry-count").textContent = entryCount + " Entries"
+
+}
+
+async function renderPopularArtist() {
+  const { data, error } = await sb
+    .from("artist_counts")
+    .select("artist, entries")
+    .order("entries", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (error || !data) {
+    console.error(error);
+    return;
+  }
+
+  const artistName = data.artist;
+  const entryCount = data.entries;
+
+  console.log({
+    artistName,
+    entryCount
+  });
+
+  document.getElementById("most-popular-artist-name").textContent = artistName;
+  document.getElementById("most-popular-artist-entry-count").textContent =
+    entryCount + " Entries";
+}
+
+
+
+
+
+
+
+
+renderPopularAlbum()
+renderPopularArtist()
