@@ -316,4 +316,11 @@ ul {
   width: 90vw;
   font-size: xxx-large;
 }
+
+     .badge {
+    max-width: 40vw;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
 }
