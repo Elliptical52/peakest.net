@@ -72,7 +72,6 @@ a:hover {
 #grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(4, 1fr);
   gap: 8px;
   padding: 8px;
   width: 98%;
@@ -230,6 +229,20 @@ ul {
   font-size: large;
 }
 
+#badge-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.badge {
+  color: white;
+  background-color: #777777;
+  padding-left: 15px;
+  padding-right: 20px;
+  border-radius: 40px;
+  max-width: 10vw;
+}
 
 @media (max-width: 1000px) {
   body {
@@ -303,5 +316,4 @@ ul {
   width: 90vw;
   font-size: xxx-large;
 }
-
 }

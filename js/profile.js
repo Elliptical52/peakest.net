@@ -36,19 +36,48 @@ async function loadProfile() {
     .eq("username", username)
     .single();
 
+
   if (profileError || !profile) {
     document.body.textContent = "User not found.";
     return;
   }
 
   currentProfile = profile;
-  
+
+  const badgeContainer = document.getElementById("badge-container");
+  if (badgeContainer) {
+
+    const { data: badges, error: badgeError } = await sb
+      .from("badges")
+      .select("id, label, color, text_color")
+      .eq("user_id", profile.id);
+    
+    
+    if (badgeError) {
+      console.error("Failed to load badges:", badgeError);
+    } else {
+      badges.forEach(badge => {
+        const h2 = document.createElement("h2");
+        h2.classList.add("badge");
+
+        h2.textContent = badge.label;
+        h2.style.backgroundColor = badge.color;
+        h2.style.color = badge.text_color;
+
+
+        badgeContainer.appendChild(h2);
+      });
+    }
+  }
+
+
   // 3) ownership
   const isOwner =
     !!currentSession &&
     (currentSession.user.id === profile.id || isAdmin);
 
-  document.getElementById("user-title").textContent = username + "'s page"
+  document.getElementById("user-title").textContent = username + "'s albums"
+  document.getElementById("badge-title").textContent = username + "'s badges"
 
   // 4) show / hide add form
   if (form) {
