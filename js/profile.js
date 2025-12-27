@@ -124,6 +124,7 @@ if (form && !form.dataset.wired) {
 
     const title = document.getElementById("album-title").value.trim();
     const cover = document.getElementById("album-cover").value.trim();
+    const artist = document.getElementById("album-artist").value.trim();
     const spotify = document.getElementById("album-spotify").value.trim();
     const ytmusic = document.getElementById("album-ytmusic").value.trim();
 
@@ -135,6 +136,7 @@ if (form && !form.dataset.wired) {
     const { error } = await sb.from("albums").insert({
       user_id: currentProfile.id,
       title,
+      artist,
       cover,
       spotify: spotify || null,
       ytmusic: ytmusic || null
@@ -256,19 +258,25 @@ function renderSearchResults(albums) {
     results.appendChild(div);
   }
 }
+
 async function selectAlbum(album) {
   // fetch full data WITH relations
   const fullAlbum = await fetchAlbumDetails(album.id);
 
   const { spotify, ytMusic } = extractLinks(fullAlbum);
+  
+  document.getElementById("album-title").value = album.title; 
+  
+  const artist =
+  album["artist-credit"]?.map(a => a.name).join(", ") || "";
 
-  document.getElementById("album-title").value = album.title;
+  document.getElementById("album-artist").value = artist;
+
   document.getElementById("album-cover").value =
     `https://coverartarchive.org/release-group/${album.id}/front`;
 
   document.getElementById("album-spotify").value = spotify || "";
   document.getElementById("album-ytmusic").value = ytMusic || "";
-
   document.getElementById("search-results").innerHTML = "";
 }
 
@@ -325,6 +333,7 @@ grid.addEventListener("click", async (e) => {
   // Load current data
   document.getElementById("edit-album-title").value = album.title || "";
   document.getElementById("edit-album-cover").value = album.cover || "";
+  document.getElementById("edit-album-artist").value = album.artist || "";
   document.getElementById("edit-album-spotify").value = album.spotify || "";
   document.getElementById("edit-album-ytmusic").value = album.ytmusic || "";
 });
@@ -334,7 +343,6 @@ document.getElementById("cancel-edit").addEventListener("click", (e) => {
 
   editingAlbum = null;
   document.getElementById("edit-panel").style.display = "none";
-  document.getElementById("add-album-form").style.display = "none";
 });
 
 document.getElementById("save-edit").addEventListener("click", async (e) => {
@@ -344,6 +352,7 @@ document.getElementById("save-edit").addEventListener("click", async (e) => {
   const updated = {
     title: document.getElementById("edit-album-title").value,
     cover: document.getElementById("edit-album-cover").value,
+    artist: document.getElementById("edit-album-artist").value,
     spotify: document.getElementById("edit-album-spotify").value || null,
     ytmusic: document.getElementById("edit-album-ytmusic").value || null,
   };

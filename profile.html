@@ -9,25 +9,28 @@
 <body class="page-profile">
   <form id="add-album-form" style="display:none">
     <h3>Add an album:</h3>
+    <div id="search-add">
+      <input
+        id="album-search"
+        placeholder="Search albums..."
+        autocomplete="off"
+      />
+      <div id="search-results"></div>
+    </div>
+    <br>
       <div id="manual-add">
         <input id="album-title" placeholder="Album title">
+        <input id="album-artist" placeholder="Album Artist">
         <input id="album-cover" placeholder="Cover image URL">
         <input id="album-spotify" placeholder="Spotify link (optional)">
         <input id="album-ytmusic" placeholder="YouTube Music link (optional)"><br>
         <button type="submit">Add Album</button>
       </div>
       <br><br>
-      <div id="search-add">
-        <input
-          id="album-search"
-          placeholder="Search albums..."
-          autocomplete="off"
-        />
-        <div id="search-results"></div>
-      </div>
       <div id="edit-panel" style="display: none;">
         <h3>Edit Album:</h3>
         <input id="edit-album-title" placeholder="Album title">
+        <input id="edit-album-artist" placeholder="Cover image URL">
         <input id="edit-album-cover" placeholder="Cover image URL">
         <input id="edit-album-spotify" placeholder="Spotify link (optional)">
         <input id="edit-album-ytmusic" placeholder="YouTube Music link (optional)"><br>
