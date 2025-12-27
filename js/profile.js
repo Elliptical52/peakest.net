@@ -85,6 +85,8 @@ function renderAlbums(albums, isOwner) {
   for (const album of albums) {
     const div = document.createElement("div");
     div.className = "album";
+    div.tabIndex = 0
+    div.setAttribute("data-tooltip", album.artist + " - " + album.title);
     div.title = album.artist + " - " + album.title;
 
 div.innerHTML = `
@@ -92,11 +94,11 @@ div.innerHTML = `
   <div class="overlay">
     ${album.spotify ? `
       <a href="${album.spotify}" target="_blank" rel="noopener">
-        <img src="logos/spotify.svg" alt="">
+        <img class="link-logo" src="logos/spotify.svg" alt="">
       </a>` : ""}
     ${album.ytmusic ? `
       <a href="${album.ytmusic}" target="_blank" rel="noopener">
-        <img src="logos/ytmusic.svg" alt="">
+        <img class="link-logo" src="logos/ytmusic.svg" alt="">
       </a>` : ""}
     ${isOwner ? `
       <button class="edit-btn" data-id="${album.id}">✎</button>
@@ -128,8 +130,8 @@ if (form && !form.dataset.wired) {
     const spotify = document.getElementById("album-spotify").value.trim();
     const ytmusic = document.getElementById("album-ytmusic").value.trim();
 
-    if (!title || !cover) {
-      alert("Title and cover URL required");
+    if (!title || !cover || !artist) {
+      alert("Title, Artist, and Cover URL required");
       return;
     }
 
